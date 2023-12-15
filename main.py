@@ -1,5 +1,5 @@
 import pygame
-import duck 
+import spritesheet 
 from sys import exit
 
 pygame.init()
@@ -20,7 +20,7 @@ background_surface = pygame.image.load("graphics/bg.png")
 #for duck
 duck_sprite_sheet_image = pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha()
 #means sprite_sheet runs through the module"duck.py" and run through the class "DuckSpriteSheet" and run through the variable "duck_sprite_sheet_image"
-sprite_sheet = duck.DuckSpriteSheet(duck_sprite_sheet_image)
+sprite_sheet = spritesheet.DuckSpriteSheet(duck_sprite_sheet_image)
 duck_frame_0 = sprite_sheet.get_image(0 , 40 , 40 , 5 , BLACK)
 duck_frame_1 = sprite_sheet.get_image(1 , 40 , 40 , 5 , BLACK)
 duck_frame_2 = sprite_sheet.get_image(2 , 40 , 40 , 5 , BLACK)
