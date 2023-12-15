@@ -18,7 +18,7 @@ screen = pygame.display.set_mode((WIDTH , HEIGHT))
 background_surface = pygame.image.load("graphics/bg.png")
 
 #for duck
-duck_sprite_sheet_image = pygame.image.load("graphics/duck.png").convert_alpha()
+duck_sprite_sheet_image = pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha()
 #means sprite_sheet runs through the module"duck.py" and run through the class "DuckSpriteSheet" and run through the variable "duck_sprite_sheet_image"
 sprite_sheet = duck.DuckSpriteSheet(duck_sprite_sheet_image)
 duck_frame_0 = sprite_sheet.get_image(0 , 40 , 40 , 5 , BLACK)
