@@ -21,9 +21,12 @@ background_surface = pygame.image.load("graphics/bg.png")
 duck_sprite_sheet_image = pygame.image.load("graphics/duck.png").convert_alpha()
 #means sprite_sheet runs through the module"duck.py" and run through the class "DuckSpriteSheet" and run through the variable "duck_sprite_sheet_image"
 sprite_sheet = duck.DuckSpriteSheet(duck_sprite_sheet_image)
-duck_frame_0 = sprite_sheet.get_image(0 , 40 , 40 , 3 , BLACK)
-
-
+duck_frame_0 = sprite_sheet.get_image(0 , 40 , 40 , 5 , BLACK)
+duck_frame_1 = sprite_sheet.get_image(1 , 40 , 40 , 5 , BLACK)
+duck_frame_2 = sprite_sheet.get_image(2 , 40 , 40 , 5 , BLACK)
+duck_frame_3 = sprite_sheet.get_image(3 , 40 , 40 , 5 , BLACK)
+duck_frame_4 = sprite_sheet.get_image(4 , 40 , 40 , 5 , BLACK)
+duck_frame_5 = sprite_sheet.get_image(5 , 40 , 40 , 5 , BLACK)
 
 def main(screen) :
     clock = pygame.time.Clock()
@@ -34,6 +37,11 @@ def main(screen) :
 
         screen.blit(background_surface,(0,0))
         screen.blit(duck_frame_0,(0,0))
+        screen.blit(duck_frame_1,(200,0))
+        screen.blit(duck_frame_2,(400,0))
+        screen.blit(duck_frame_3,(600,0))
+        screen.blit(duck_frame_4,(800,0))
+        screen.blit(duck_frame_5,(1000,0))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT :
