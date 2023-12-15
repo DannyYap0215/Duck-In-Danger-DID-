@@ -25,14 +25,23 @@ sprite_sheet = spritesheet.DuckSpriteSheet(duck_sprite_sheet_image)
 
 #animation list for white duck and brown duck
 animation_list = []
-animation_steps = 3
+animation_steps = [3, 5]
+action = 0
 last_update = pygame.time.get_ticks()
-animation_cooldown = 200
+animation_cooldown = 150
 frame = 0
+step_counter = 0
 
-for x in range(animation_steps):
-    animation_list.append(sprite_sheet.get_image(x , 40 , 40 , 5 , BLACK)) #add to list
-
+#loops animation in the animation step list, creates an empty list, 
+#and for _ it loops through the animation which had looped throught the animation_step list ,
+#getting _ images that had looped through and adding each to the temporary image list !
+#after that, it loops through the second value in the list which will be 5
+for animation in animation_steps:
+    temp_image_list = []
+    for _ in range(animation) :
+        temp_image_list.append(sprite_sheet.get_image(step_counter , 40 , 40 , 5 , BLACK)) #add to list
+        step_counter = step_counter + 1
+    animation_list.append(temp_image_list)
 
 def main(screen) :
     global frame,last_update
@@ -40,6 +49,7 @@ def main(screen) :
 
     run = True
     while run :
+        global action
         clock.tick(FPS)
 
         screen.blit(background_surface,(0,0))
@@ -49,20 +59,31 @@ def main(screen) :
         if (current_time - last_update )>= animation_cooldown :
             frame = frame + 1
             last_update = current_time
-            if frame >= len(animation_list): #keeps looping the animation
+            if frame >= len(animation_list[action]): #keeps looping the animation through the action 0,1,2
                 frame = 0
        
         
-        
-        screen.blit(animation_list[frame],(0,0))
+        #from animation list, it goes through action, then access the frames from it
+        screen.blit(animation_list[action][frame],(0,0))
         
         
     
         pygame.display.update()
         for event in pygame.event.get():
-            if event.type == pygame.QUIT :
+            if event.type == pygame.QUIT:
                 run = False
                 break
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN and action > 0:
+                    action = action - 1
+                    frame = 0
+                elif event.key == pygame.K_UP and action < len(animation_list) - 1:
+                    action = action + 1
+                    frame = 0
+        
+            
+                    
+                
     
     pygame.quit()
     quit()
