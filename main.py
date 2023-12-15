@@ -13,6 +13,7 @@ WIDTH , HEIGHT = (1600,1000)
 BLACK = (0,0,0)
 screen = pygame.display.set_mode((WIDTH , HEIGHT))
 
+
 #for backgroud
 #might impliment a moving background
 background_surface = pygame.image.load("graphics/bg.png")
@@ -21,14 +22,20 @@ background_surface = pygame.image.load("graphics/bg.png")
 duck_sprite_sheet_image = pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha()
 #means sprite_sheet runs through the module"duck.py" and run through the class "DuckSpriteSheet" and run through the variable "duck_sprite_sheet_image"
 sprite_sheet = spritesheet.DuckSpriteSheet(duck_sprite_sheet_image)
-white_duck_frame_0 = sprite_sheet.get_image(0 , 40 , 40 , 2.5 , BLACK)
-white_duck_frame_1 = sprite_sheet.get_image(1 , 40 , 40 , 2.5 , BLACK)
-white_duck_frame_2 = sprite_sheet.get_image(2 , 40 , 40 , 2.5 , BLACK)
-white_duck_frame_3 = sprite_sheet.get_image(3 , 40 , 40 , 2.5 , BLACK)
-white_duck_frame_4 = sprite_sheet.get_image(4 , 40 , 40 , 2.5 , BLACK)
-white_duck_frame_5 = sprite_sheet.get_image(5 , 40 , 40 , 2.5 , BLACK)
+
+#animation list for white duck and brown duck
+animation_list = []
+animation_steps = 3
+last_update = pygame.time.get_ticks()
+animation_cooldown = 200
+frame = 0
+
+for x in range(animation_steps):
+    animation_list.append(sprite_sheet.get_image(x , 40 , 40 , 5 , BLACK)) #add to list
+
 
 def main(screen) :
+    global frame,last_update
     clock = pygame.time.Clock()
 
     run = True
@@ -37,14 +44,20 @@ def main(screen) :
 
         screen.blit(background_surface,(0,0))
         
-        screen.blit(white_duck_frame_0,(0,0))
-        screen.blit(white_duck_frame_1,(200,0))
-        screen.blit(white_duck_frame_2,(400,0))
-        screen.blit(white_duck_frame_3,(600,0))
-        screen.blit(white_duck_frame_4,(800,0))
-        screen.blit(white_duck_frame_5,(1000,0))
+        #update animation
+        current_time = pygame.time.get_ticks( )
+        if (current_time - last_update )>= animation_cooldown :
+            frame = frame + 1
+            last_update = current_time
+            if frame >= len(animation_list): #keeps looping the animation
+                frame = 0
+       
         
         
+        screen.blit(animation_list[frame],(0,0))
+        
+        
+    
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT :
