@@ -20,7 +20,7 @@ background_surface = pygame.image.load("graphics/bg.png")
 #for duck
 duck_sprite_sheet_image = pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha()
 #means sprite_sheet runs through the module"duck.py" and run through the class "DuckSpriteSheet" and run through the variable "duck_sprite_sheet_image"
-sprite_sheet = spritesheet.DuckSpriteSheet(duck_sprite_sheet_image)
+sprite_sheet = spritesheet.SpriteSheet(duck_sprite_sheet_image)
 
 #animation list for the ducks
 animation_list = []
