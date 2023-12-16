@@ -8,7 +8,7 @@ class AnimationController:
         self.action = 0
         self.frame = 0
         self.last_update = pygame.time.get_ticks()
-        self.animation_cooldown = 150
+        self.animation_cooldown = 50
 
     def setup_animation(self):
         duck_sprite_sheet_image = pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha()
@@ -20,7 +20,7 @@ class AnimationController:
         for animation in animation_steps:
             temp_image_list = []
             for _ in range(animation):
-                temp_image_list.append(sprite_sheet.get_image(step_counter, 40, 40, 5, self.BLACK))
+                temp_image_list.append(sprite_sheet.get_image(step_counter, 40, 40, 10, self.BLACK)) #.ppnd(s_s.g_i(s_c,sizetaken,sizetaken,scale,black))
                 step_counter += 1
             self.animation_list.append(temp_image_list)
 
@@ -36,4 +36,4 @@ class AnimationController:
             if self.frame >= len(self.animation_list[self.action]):
                 self.frame = 0
 
-        screen.blit(self.animation_list[self.action][self.frame], (0, 0))
+        screen.blit(self.animation_list[self.action][self.frame], (500, 400))
