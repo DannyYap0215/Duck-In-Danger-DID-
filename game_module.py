@@ -1,13 +1,44 @@
 import pygame
 from animation import AnimationController
 
+
+#MAIN
 def start_button(screen):
-    button_rect = pygame.Rect(screen.get_width() // 2 - 50, screen.get_height() // 2 - 25, 100, 50)
-    pygame.draw.rect(screen, (255, 255, 255), button_rect)
-    font = pygame.font.Font(None, 36)
-    text = font.render("Start", True, (0, 0, 0))
-    text_rect = text.get_rect(center=button_rect.center)
+    start_button_rect = pygame.Rect(740, 350,200,100)
+    pygame.draw.rect(screen, (0, 0, 0), start_button_rect)
+    font_size = 72
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf",font_size)
+    text = font_name.render("Start", True, (255, 255, 255))
+    text_rect = text.get_rect(center=start_button_rect.center)
     screen.blit(text, text_rect)
+    
+def option_button(screen):
+    option_button_rect = pygame.Rect(740, 450, 200, 100)
+    pygame.draw.rect(screen, (0, 0, 0), option_button_rect)
+    font_size = 72
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf",font_size)
+    text = font_name.render("Option", True, (255, 255, 255))
+    text_rect = text.get_rect(center=option_button_rect.center)
+    screen.blit(text, text_rect)
+    
+def quit_button(screen):
+    quit_button_rect = pygame.Rect(740, 550, 200, 100)
+    pygame.draw.rect(screen, (0, 0, 0), quit_button_rect)
+    font_size = 72
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf",font_size)
+    text = font_name.render("Quit", True, (255, 255, 255))
+    text_rect = text.get_rect(center=quit_button_rect.center)
+    screen.blit(text, text_rect)
+    
+def resume_button(screen):
+    resume_button_rect = pygame.Rect(740, 650, 200, 100)
+    pygame.draw.rect(screen, (0, 0, 0), resume_button_rect)
+    font_size = 72
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf",font_size)
+    text = font_name.render("Resume", True, (255, 255, 255))
+    text_rect = text.get_rect(center=resume_button_rect.center)
+    screen.blit(text, text_rect)
+
 
 def main(screen):
     clock = pygame.time.Clock()
@@ -15,17 +46,24 @@ def main(screen):
     animation_controller = AnimationController()
 
     show_home_screen = True
+    selected_button = 0  # 0 is start, 1 is option, 2 is  quit 
 
     run = True
     while run:
         clock.tick(60)
 
-        screen.fill((0, 0, 0))  
+        screen.fill((0, 0, 0))
 
         if show_home_screen:
             start_button(screen)
+            option_button(screen)
+            quit_button(screen)
+            
+            selection_button = pygame.Rect(540, 350 + selected_button * 100, 30, 100)
+            pygame.draw.rect(screen, (255, 255, 255), selection_button)
+
         else:
-            screen.blit(pygame.image.load("graphics/bg.png"), (0, 0))
+            screen.blit(pygame.image.load("graphics/background1.png"), (0, 0))
             animation_controller.update_animation(screen)
 
         pygame.display.update()
@@ -36,14 +74,19 @@ def main(screen):
                 break
             elif event.type == pygame.KEYDOWN:
                 if show_home_screen and event.key == pygame.K_RETURN:
-                    show_home_screen = False  # Transition to animation on Enter key press
-                    animation_controller.setup_animation()
-                elif event.key == pygame.K_DOWN and animation_controller.action > 0:
-                    animation_controller.action -= 1
-                    animation_controller.frame = 0
-                elif event.key == pygame.K_UP and animation_controller.action < len(animation_controller.animation_list) - 1:
-                    animation_controller.action += 1
-                    animation_controller.frame = 0
+                    if selected_button == 0:  
+                        show_home_screen = False  
+                        animation_controller.setup_animation()
+                    if selected_button == 1: 
+                        pass 
+                    if selected_button == 2:  
+                        pass
+                elif event.key == pygame.K_DOWN:
+                    if selected_button < 2:
+                        selected_button += 1
+                elif event.key == pygame.K_UP:
+                    if selected_button > 0:
+                        selected_button -= 1
 
     pygame.quit()
     exit()
