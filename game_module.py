@@ -80,7 +80,8 @@ def main(screen):
                     if selected_button == 1: 
                         pass 
                     if selected_button == 2:  
-                        pass
+                        pygame.quit()
+                        exit()
                 elif event.key == pygame.K_DOWN:
                     if selected_button < 2:
                         selected_button += 1
