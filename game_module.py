@@ -48,6 +48,10 @@ def main(screen):
     show_home_screen = True
     selected_button = 0  # 0 is start, 1 is option, 2 is  quit 
 
+    selected_button_blink_timer = 0
+    selected_button_blink_cooldown = 300
+    is_button_visible = True
+    
     run = True
     while run:
         clock.tick(60)
@@ -58,10 +62,14 @@ def main(screen):
             start_button(screen)
             option_button(screen)
             quit_button(screen)
+            selected_button_blink_timer += clock.get_time()
             
-            selection_button = pygame.Rect(540, 350 + selected_button * 100, 30, 100)
-            pygame.draw.rect(screen, (255, 255, 255), selection_button)
-
+            if selected_button_blink_timer >= selected_button_blink_cooldown:
+                selected_button_blink_timer = 0
+                is_button_visible = not is_button_visible
+            if is_button_visible:
+                selection_button = pygame.Rect(540, 350 + selected_button * 100, 30, 100)
+                pygame.draw.rect(screen, (255, 255, 255), selection_button)
         else:
             screen.blit(pygame.image.load("graphics/background1.png"), (0, 0))
             animation_controller.update_animation(screen)
@@ -74,12 +82,12 @@ def main(screen):
                 break
             elif event.type == pygame.KEYDOWN:
                 if show_home_screen and event.key == pygame.K_RETURN:
-                    if selected_button == 0:  
+                    if selected_button == 0:  #start game
                         show_home_screen = False  
                         animation_controller.setup_animation()
-                    if selected_button == 1: 
+                    if selected_button == 1: #option
                         pass 
-                    if selected_button == 2:  
+                    if selected_button == 2: #quit
                         pygame.quit()
                         exit()
                 elif event.key == pygame.K_DOWN:
