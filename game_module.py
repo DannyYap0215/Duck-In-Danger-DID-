@@ -49,7 +49,7 @@ def main(screen):
     selected_button = 0  # 0 is start, 1 is option, 2 is  quit 
 
     selected_button_blink_timer = 0
-    selected_button_blink_cooldown = 300
+    selected_button_blink_cooldown = 350
     is_button_visible = True
     
     run = True

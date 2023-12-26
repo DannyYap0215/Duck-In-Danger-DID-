@@ -1,14 +1,14 @@
 import pygame
 import spritesheet
 
-class AnimationController:
+class AnimationController():
     def __init__(self):
         self.BLACK = (0, 0, 0)
         self.animation_list = []
         self.action = 0
         self.frame = 0
         self.last_update = pygame.time.get_ticks()
-        self.animation_cooldown = 50
+        self.animation_cooldown = 200 #speed
 
     def setup_animation(self):
         duck_sprite_sheet_image = pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha()
