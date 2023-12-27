@@ -1,6 +1,6 @@
 import pygame
 from animation import AnimationController
-
+from player import Player
 
 #MAIN
 def start_button(screen):
@@ -42,28 +42,27 @@ def resume_button(screen):
 
 def main(screen):
     clock = pygame.time.Clock()
-
     animation_controller = AnimationController()
+    player = Player(400, 300)  # Adjust the initial position as needed
+    background = pygame.image.load("graphics/background1.png").convert()
 
     show_home_screen = True
-    selected_button = 0  # 0 is start, 1 is option, 2 is  quit 
+    selected_button = 0  # 0 is start, 1 is option, 2 is quit
 
     selected_button_blink_timer = 0
     selected_button_blink_cooldown = 350
     is_button_visible = True
-    
-    run = True
-    while run:
+
+    while True:
         clock.tick(60)
 
-        screen.fill((0, 0, 0))
-
         if show_home_screen:
+            screen.fill((0, 0, 0))
             start_button(screen)
             option_button(screen)
             quit_button(screen)
             selected_button_blink_timer += clock.get_time()
-            
+
             if selected_button_blink_timer >= selected_button_blink_cooldown:
                 selected_button_blink_timer = 0
                 is_button_visible = not is_button_visible
@@ -71,23 +70,39 @@ def main(screen):
                 selection_button = pygame.Rect(540, 350 + selected_button * 100, 30, 100)
                 pygame.draw.rect(screen, (255, 255, 255), selection_button)
         else:
-            screen.blit(pygame.image.load("graphics/background1.png"), (0, 0))
-            animation_controller.update_animation(screen)
+            # Display the background once and draw the player and animation on top of it
+            screen.blit(background, (0, 0))
+
+            keys = pygame.key.get_pressed()
+
+            if keys[pygame.K_a]:
+                player.move_left()
+            elif keys[pygame.K_d]:
+                player.move_right()
+            elif keys[pygame.K_w]:
+                player.move_up()
+            elif keys[pygame.K_s]:
+                player.move_down()
+            else:
+                player.reset_animation()
+
+            player.draw(screen)
+            animation_controller.update_animation(screen, player.x, player.y)
 
         pygame.display.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
-                break
+                pygame.quit()
+                exit()
             elif event.type == pygame.KEYDOWN:
                 if show_home_screen and event.key == pygame.K_RETURN:
-                    if selected_button == 0:  #start game
-                        show_home_screen = False  
+                    if selected_button == 0:  # Start game
+                        show_home_screen = False
                         animation_controller.setup_animation()
-                    if selected_button == 1: #option
-                        pass 
-                    if selected_button == 2: #quit
+                    elif selected_button == 1:  # Option
+                        pass
+                    elif selected_button == 2:  # Quit
                         pygame.quit()
                         exit()
                 elif event.key == pygame.K_DOWN:
@@ -97,5 +112,9 @@ def main(screen):
                     if selected_button > 0:
                         selected_button -= 1
 
-    pygame.quit()
-    exit()
+if __name__ == "__main__":
+    pygame.init()
+    pygame.display.set_caption("Duck On The Run!")
+    WIDTH, HEIGHT = (1600, 1000)
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    main(screen)
