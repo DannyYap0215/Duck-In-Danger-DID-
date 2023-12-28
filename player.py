@@ -20,7 +20,7 @@ class Player():
         self.animation_controller.action = 0  # Set the action for right movement
 
     def move_up(self):
-        self.y -= self.speed
+        self.y -= self.speed + 20
         self.animation_controller.action = 1  # Set the action for up movement
 
     def move_down(self):
@@ -32,3 +32,11 @@ class Player():
 
     def draw(self, screen):
         self.animation_controller.update_animation(screen, self.x, self.y)
+
+    def apply_gravity(self):
+        self.y += self.speed
+        
+        if self.y > 700 :
+            self.y = 700 
+        if self.y <= 0 :
+            self.y = 0 

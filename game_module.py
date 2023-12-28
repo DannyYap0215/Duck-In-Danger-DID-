@@ -87,6 +87,7 @@ def main(screen):
                 player.reset_animation()
 
             player.draw(screen)
+            player.apply_gravity()
             animation_controller.update_animation(screen, player.x, player.y)
 
         pygame.display.update()
