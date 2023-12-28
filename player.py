@@ -40,3 +40,7 @@ class Player():
             self.y = 700 
         if self.y <= 0 :
             self.y = 0 
+        if self.x > 800 :
+            self.x = 800 
+        if self.x <= 0 :
+            self.x = 0 
