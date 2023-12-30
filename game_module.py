@@ -63,6 +63,7 @@ def main(screen):
             quit_button(screen)
             selected_button_blink_timer += clock.get_time()
 
+            #selection blinker
             if selected_button_blink_timer >= selected_button_blink_cooldown:
                 selected_button_blink_timer = 0
                 is_button_visible = not is_button_visible
@@ -70,7 +71,6 @@ def main(screen):
                 selection_button = pygame.Rect(540, 350 + selected_button * 100, 30, 100)
                 pygame.draw.rect(screen, (255, 255, 255), selection_button)
         else:
-            # Display the background once and draw the player and animation on top of it
             screen.blit(background, (0, 0))
 
             keys = pygame.key.get_pressed()
@@ -118,4 +118,4 @@ if __name__ == "__main__":
     pygame.display.set_caption("Duck On The Run!")
     WIDTH, HEIGHT = (1600, 1000)
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    main(screen)
+    main(screen) 
