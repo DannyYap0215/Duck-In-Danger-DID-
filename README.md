@@ -1,3 +1,2 @@
 - Duck in Danger (DID)
-- the object of the games is to play as a duck avoiding aliens from above
-- 
+- flappy game clone
