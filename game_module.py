@@ -28,7 +28,16 @@ def quit_button(screen):
     text = font_name.render("Quit", True, (255, 255, 255))
     text_rect = text.get_rect(center=quit_button_rect.center)
     screen.blit(text, text_rect)
-
+    
+def volume_option(screen):
+    volume_option = pygame.Rect(700, 550, 200, 100)
+    pygame.draw.rect(screen, (0, 0, 0), volume_option)
+    font_size = 72
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
+    text = font_name.render("Volume", True, (255, 255, 255))
+    text_rect = text.get_rect(center=volume_option.center)
+    screen.blit(text, text_rect)
+    
     
 
 def main(screen):
@@ -63,14 +72,26 @@ def main(screen):
             if is_button_visible:
                 selection_button = pygame.Rect(540, 350 + selected_button * 100, 30, 100)
                 pygame.draw.rect(screen, (255, 255, 255), selection_button)
+                
         elif show_option_screen :
             screen.fill((0, 0, 0))  # Black screen for the option screen
             font_size = 72
             font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
-            text = font_name.render("Option Screen", True, (255, 255, 255))
+            text = font_name.render("Controls", True, (255, 255, 255))
             text_rect = text.get_rect(center=(1600 // 2, 1000 // 2))
             screen.blit(text, text_rect)
+            volume_option(screen)
+            
+            selected_button_blink_timer += clock.get_time()
+            if selected_button_blink_timer >= selected_button_blink_cooldown:
+                selected_button_blink_timer = 0
+                is_button_visible = not is_button_visible
+            if is_button_visible:
+                selection_button = pygame.Rect(420, 350 + selected_button * 100, 30, 100)
+                pygame.draw.rect(screen, (255, 255, 255), selection_button)
+            
             pygame.display.update()
+                
             
         elif show_game_screen:
             screen.blit(background, (0, 0))
@@ -114,18 +135,36 @@ def main(screen):
                         elif event.key == pygame.K_ESCAPE:
                                 show_option_screen = False
                                 show_menu_screen = True
+                    elif show_option_screen:
+                        if selected_button == 1:  # Controls
+                            show_menu_screen = False
+                            show_option_screen = False
+                            screen.fill((0, 0, 0))
+                            pygame.display.update()
+                        elif selected_button == 2:  # Volume
+                            pass
                 elif event.key == pygame.K_DOWN:
-                    if selected_button < 2:
-                        selected_button += 1
+                    if show_menu_screen :
+                        if selected_button < 2:
+                            selected_button += 1
+                    if show_option_screen :
+                        selected_button = 1
+                        if selected_button <= 2:
+                            selected_button += 1
                 elif event.key == pygame.K_UP:
-                    if selected_button > 0:
-                        selected_button -= 1
+                    if show_menu_screen :
+                        if selected_button > 0:
+                            selected_button -= 1
+                    if show_option_screen :
+                        selected_button = 1
+                        if selected_button > 1:
+                            selected_button -= 1
+                    
                 elif event.key == pygame.K_ESCAPE:
                     show_menu_screen = True
                     show_game_screen = False
                     show_option_screen = False
                 
-
 if __name__ == "__main__":
     pygame.init()
     pygame.display.set_caption("Duck On The Run!")
