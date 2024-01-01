@@ -1,6 +1,7 @@
 import pygame
 from animation import AnimationController
 from player import Player
+import math
 
 def start_button(screen):
     start_button_rect = pygame.Rect(740, 350, 200, 100)
@@ -38,13 +39,18 @@ def volume_option(screen):
     text_rect = text.get_rect(center=volume_option.center)
     screen.blit(text, text_rect)
     
-    
+
 
 def main(screen):
     clock = pygame.time.Clock()
     animation_controller = AnimationController()
     player = Player(400, 300)  # Adjust the initial position as needed
+    
     background = pygame.image.load("graphics/background1.png").convert()
+    background_width = background.get_width()
+    background_rect = background.get_rect()
+    scroll = 0
+    tiles = math.ceil(1600 / background_width ) + 1
 
     show_menu_screen = True
     show_game_screen = False
@@ -54,10 +60,9 @@ def main(screen):
     selected_button_blink_timer = 0
     selected_button_blink_cooldown = 350
     is_button_visible = True
-
+    
     while True:
         clock.tick(60)
-
         if show_menu_screen:
             screen.fill((0, 0, 0))
             start_button(screen)
@@ -74,7 +79,7 @@ def main(screen):
                 pygame.draw.rect(screen, (255, 255, 255), selection_button)
                 
         elif show_option_screen :
-            screen.fill((0, 0, 0))  # Black screen for the option screen
+            screen.fill((0, 0, 0))  
             font_size = 72
             font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
             text = font_name.render("Controls", True, (255, 255, 255))
@@ -94,8 +99,19 @@ def main(screen):
                 
             
         elif show_game_screen:
-            screen.blit(background, (0, 0))
-
+            
+            #scrolling background; basically 3 image that just keep looping
+            for i in range(0,tiles) :
+                screen.blit(background, (i * background_width + scroll, 0))
+                background_rect.x = i * background_width + scroll
+                
+            scroll -= 5
+            
+            if abs(scroll) > background_width :
+                scroll = 0
+            
+            
+            
             keys = pygame.key.get_pressed()
 
             if keys[pygame.K_a]:
