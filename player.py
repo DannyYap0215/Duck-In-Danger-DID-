@@ -1,5 +1,3 @@
-# player.py
-
 import pygame
 from animation import AnimationController
 

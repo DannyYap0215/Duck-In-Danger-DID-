@@ -1,5 +1,3 @@
-# main.py
-
 import pygame
 from game_module import main as game_main
 
