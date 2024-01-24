@@ -143,6 +143,16 @@ def main(screen):
             
             if abs(scroll) > background_width :
                 scroll = 0
+            
+            pillar_x += pillar_x_change
+            if pillar_x <= -10:
+                pillar_x = 1600
+                pillar_height = random.randint(150, 450)
+            display_pillar(screen, pillar_x, pillar_height)
+
+            # Check for collision
+            if collision_detection(player_x, player_y, pillar_x, pillar_height):
+             show_game_screen = False # Stop the game
 
             pillar_x += pillar_x_change
             if pillar_x <= -10:
@@ -188,17 +198,19 @@ def main(screen):
             else:
                 player_y += player_speed
                 animation_controller.frame = 0  # Reset frame when not moving
+
                 
              # Freeze the player's movement on collision
             if not collision_detection(player_x, player_y, pillar_x, pillar_height):    
              player_y += gravity_speed  # Apply gravity consistently
-           
+        
             # Ensure player stays within bounds
             player_y = max(0, min(player_y, 700))
             player_x = max(0, min(player_x, 800))
                 
             animation_controller.update_animation(screen, player_x, player_y)
             pygame.display.update()
+
         pygame.display.update()           
 
         for event in pygame.event.get():
@@ -251,12 +263,13 @@ def main(screen):
                     show_menu_screen = True
                     show_game_screen = False
                     show_option_screen = False
-                
+
                 
 
         pygame.display.update()
 
 if __name__ == "_main_":
+
     pygame.init()
     pygame.display.set_caption("Duck On The Run!")
     WIDTH, HEIGHT = (1600, 1000)
