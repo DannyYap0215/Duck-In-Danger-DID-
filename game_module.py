@@ -2,7 +2,7 @@ import pygame
 from animation import AnimationController
 import math
 import random
-
+#remember to add Duck in Danger/ to each path when submitting as a ZIP file
 
 def start_button(screen):
     start_button_rect = pygame.Rect(740, 350, 200, 100)
@@ -103,15 +103,15 @@ def main(screen):
     #pillar varaibles...
     pillar_x_change = -4
     pillar_x = 1600
-    pillar_height = random.randint(150, 450)
+    pillar_height = random.randint(150, 450) #random y 
     
     
     #duck egg varaibles...
-    egg_surface = pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha()
-    egg_surface = pygame.transform.scale(egg_surface, (40, 40))
+    egg_surface = pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha() #load image and convert to alpha
+    egg_surface = pygame.transform.scale(egg_surface, (40, 40)) #scale the image to 40 by 40
 
     duck_egg_spawn_timer = pygame.USEREVENT + 1
-    duck_egg_spawn_time = 1000
+    duck_egg_spawn_time = 1000 #1 sec for egg to spawn each time
     pygame.time.set_timer(duck_egg_spawn_timer, duck_egg_spawn_time)
     spawned = True
     
@@ -212,7 +212,7 @@ def main(screen):
 
             if keys[pygame.K_a]:
                 player_x -= player_speed
-                animation_controller.action = 1  # Set the action for left movement
+                animation_controller.action = 1  # Set the action for left movement #change action from 0 in animation to 1
             elif keys[pygame.K_d]:
                 player_x += player_speed
                 animation_controller.action = 1  # Set the action for right movement
