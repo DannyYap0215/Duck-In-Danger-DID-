@@ -59,7 +59,7 @@ def display_pillar(screen, pillar_x, pillar_height):
 
 
 def collision_detection(player_x, player_y, pillar_x, pillar_height):
-    player_rect = pygame.Rect(player_x, player_y, 50, -50) #player_rect will be from x and y of the player and the rect will be (85 by -50) -50 is because it will draw down the rectangle thus make it easier 
+    player_rect = pygame.Rect(player_x, player_y, 50, 50) #player_rect will be from x and y of the player and the rect will be (85 by -50) -50 is because it will draw down the rectangle thus make it easier 
     pillar_rect1 = pygame.Rect(pillar_x, 0, 60, pillar_height)  #player_rect 1 will be from pillar x (upper) and the y =0 ; width of the pillar and the randint height of it
     pillar_rect2 = pygame.Rect(pillar_x, pillar_height + 200, 60, 1000 - pillar_height - 330) #player_rect 2 will be collision for the bottom_pillar calculation.. :P
 
