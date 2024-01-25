@@ -42,6 +42,7 @@ def volume_option(screen):
     screen.blit(text, text_rect)
 
 def display_pillar(screen, pillar_x, pillar_height):
+    pillar_image = pygame.image.load("graphics/enemy/pipe.png").convert_alpha()
     pillar_colour = (124, 252, 0) #green
     pillar_sec_colour = (124, 252, 0)
     pillar_width = 60 #width of pillar
@@ -52,6 +53,9 @@ def display_pillar(screen, pillar_x, pillar_height):
     if pillar_x <= -10: #if the x of pillar is at -10 it will reset again to 1600
         pillar_x = 1600
         pillar_height = random.randint(150, 450)
+        
+    screen.blit(pillar_image, (pillar_x, 0))
+    screen.blit(pillar_image, (pillar_x, pillar_height + 300))
 
     bottom_pillar_height = 1000 - pillar_height - 430 # bottom pillar is 1000- (upper height) - 430(300 for gap and 130 from the ground) which is the ground which we wont be displaying the pillar )
 
