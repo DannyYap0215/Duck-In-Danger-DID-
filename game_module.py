@@ -42,25 +42,31 @@ def volume_option(screen):
     screen.blit(text, text_rect)
 
 def display_pillar(screen, pillar_x, pillar_height):
-    pillar_image = pygame.image.load("graphics/enemy/pipe.png").convert_alpha()
-    pillar_colour = (124, 252, 0) #green
+    upper_pipe_image = pygame.image.load("graphics/enemy/upper_pillar.png").convert_alpha()
+    lower_pipe_image = pygame.image.load("graphics/enemy/lower_pillar.png").convert_alpha()
+    pillar_colour = (124, 252, 0)  # green
     pillar_sec_colour = (124, 252, 0)
-    pillar_width = 60 #width of pillar
+    pillar_width = 60  # width of pillar
 
-    pillar_x_change = -4 #the changes in pillar
+    pillar_x_change = -4  # the changes in pillar
 
-    pillar_x += pillar_x_change #the x of pillar will decrease thus will go left 
-    if pillar_x <= -10: #if the x of pillar is at -10 it will reset again to 1600
+    pillar_x += pillar_x_change  # the x of pillar will decrease thus will go left
+    if pillar_x <= -10:  # if the x of pillar is at -10 it will reset again to 1600
         pillar_x = 1600
         pillar_height = random.randint(150, 450)
-        
-    screen.blit(pillar_image, (pillar_x, 0))
-    screen.blit(pillar_image, (pillar_x, pillar_height + 300))
 
-    bottom_pillar_height = 1000 - pillar_height - 430 # bottom pillar is 1000- (upper height) - 430(300 for gap and 130 from the ground) which is the ground which we wont be displaying the pillar )
+    bottom_pillar_height = 1000 - pillar_height - 430  # bottom pillar is 1000- (upper height) - 430(300 for gap and 130 from the ground) which is the ground which we won't be displaying the pillar
 
-    pygame.draw.rect(screen, pillar_colour, (pillar_x, 0, pillar_width, pillar_height)) #starts at x=1600 , y = 0 , width of the pillar, randint height of the pillar)
-    pygame.draw.rect(screen, pillar_sec_colour, (pillar_x, pillar_height + 300, pillar_width, bottom_pillar_height)) #starts at x=1600 , randint height of the upper pillar and 300(gap) , width of the pillar, height of bottom pillar Line 55)
+    # Draw the rectangles
+    pygame.draw.rect(screen, pillar_colour, (pillar_x, 0, pillar_width, pillar_height))  # upper pillar
+    pygame.draw.rect(screen, pillar_sec_colour,(pillar_x, pillar_height + 300, pillar_width, bottom_pillar_height))  # bottom pillar
+
+    upper_pipe_image = pygame.transform.scale(upper_pipe_image, (pillar_width + 5, pillar_height)) # scale the image to the rect of pillar
+    lower_pipe_image = pygame.transform.scale(lower_pipe_image, (pillar_width + 5, bottom_pillar_height))
+    
+    screen.blit(upper_pipe_image, (pillar_x-3, 0)) #blit image onto the pillar and -3 to move it to the left a bit
+    screen.blit(lower_pipe_image, (pillar_x-3, pillar_height + 300))
+
 
 
 def collision_detection(player_x, player_y, pillar_x, pillar_height):
