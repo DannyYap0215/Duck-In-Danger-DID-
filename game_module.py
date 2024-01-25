@@ -2,6 +2,7 @@ import pygame
 from animation import AnimationController
 import math
 import random
+import spritesheet
 #remember to add Duck in Danger/ to each path when submitting as a ZIP file
 
 def start_button(screen):
@@ -95,24 +96,26 @@ def main(screen):
     
 
     #blinking selected button
-    selected_button_blink_timer = 0
-    selected_button_blink_cooldown = 350
+    selected_button_blink_timer = 0 
+    selected_button_blink_cooldown = 350 
     is_button_visible = True
 
 
     #pillar varaibles...
-    pillar_x_change = -4
-    pillar_x = 1600
+    pillar_x_change = -4 #changes in x
+    pillar_x = 1600 #x axis where the pillar starts at
     pillar_height = random.randint(150, 450) #random y 
     
     
     #duck egg varaibles...
-    egg_surface = pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha() #load image and convert to alpha
-    egg_surface = pygame.transform.scale(egg_surface, (40, 40)) #scale the image to 40 by 40
+    BLACK = (0, 0, 0)
+    egg_sprite_sheet = spritesheet.SpriteSheet(pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha())#convert alpha makes transparency easier and make performance smoother
+    egg_surface = egg_sprite_sheet.get_image(0, 40, 40, 1, BLACK)
+    
 
     duck_egg_spawn_timer = pygame.USEREVENT + 1
-    duck_egg_spawn_time = 1000 #1 sec for egg to spawn each time
-    pygame.time.set_timer(duck_egg_spawn_timer, duck_egg_spawn_time)
+    duck_egg_spawn_time = 5000 #sec for egg to spawn each time
+    pygame.time.set_timer(duck_egg_spawn_timer, duck_egg_spawn_time) # generate an event signal for the event duck_egg_spawn_timer every 3 seconds. # bassically making my own event to make delays in the egg dropping :P
     spawned = True
     
     score = 0 
@@ -239,13 +242,13 @@ def main(screen):
             animation_controller.update_animation(screen, player_x, player_y)
 
             
-            if not spawned:
+            if not spawned: #means that egg is already in the game 
                 if egg_surface_rect.y < 850:
                     egg_surface_rect.y += 2
                     screen.blit(egg_surface, egg_surface_rect)
                 elif egg_surface_rect.y == 850:
                     egg_surface_rect = None
-                    spawned = True
+                    spawned = True #means that the game need to spawn an egg
             
                 
 
