@@ -119,12 +119,12 @@ def main(screen):
     
     #duck egg varaibles...
     BLACK = (0, 0, 0)
-    egg_sprite_sheet = spritesheet.SpriteSheet(pygame.image.load("graphics/white-duck/white-duck-walk.png").convert_alpha())#convert alpha makes transparency easier and make performance smoother
+    egg_sprite_sheet = spritesheet.SpriteSheet(pygame.image.load("graphics/duck egg/duckegg.png").convert_alpha())#convert alpha makes transparency easier and make performance smoother
     egg_surface = egg_sprite_sheet.get_image(0, 40, 40, 1, BLACK)
     
 
     duck_egg_spawn_timer = pygame.USEREVENT + 1
-    duck_egg_spawn_time = 5000 #sec for egg to spawn each time
+    duck_egg_spawn_time = 1000 #sec for egg to spawn each time
     pygame.time.set_timer(duck_egg_spawn_timer, duck_egg_spawn_time) # generate an event signal for the event duck_egg_spawn_timer every 3 seconds. # bassically making my own event to make delays in the egg dropping :P
     spawned = True
     
