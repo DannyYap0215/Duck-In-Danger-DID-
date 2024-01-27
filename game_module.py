@@ -114,9 +114,15 @@ def how_to_scroll_enter(screen) :
     screen.blit(text, text_rect)
     
 def controls_controls_option(screen) :
-    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", 60)
-    text = font_name.render("Controls", True, (255, 255, 255))
-    screen.blit(text, text.get_rect(center=(600,500)))
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", 30)
+    up_text = font_name.render("\"Up\" Key to scroll", True, (255, 255, 255))
+    down_text = font_name.render("\"Down\" Key to scroll", True, (255, 255, 255))
+    select_text = font_name.render("\"Enter\" Key to select", True, (255, 255, 255))
+    menu_text = pygame.font.Font("fonts/8-BIT WONDER.ttf", 50).render("Menu", True, (255, 255, 255))
+    screen.blit(up_text, up_text.get_rect(center=(800,200)))
+    screen.blit(down_text, down_text.get_rect(center=(800,250)))
+    screen.blit(select_text, select_text.get_rect(center=(800,300)))
+    screen.blit(menu_text, menu_text.get_rect(center=(800,140)))
     
 
     
