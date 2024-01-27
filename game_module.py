@@ -5,6 +5,7 @@ import random
 import spritesheet
 #remember to add Duck in Danger/ to each path when submitting as a ZIP file
 
+#Danny Part
 def start_button(screen):
     start_button_rect = pygame.Rect(740, 350, 200, 100)
     pygame.draw.rect(screen, (0, 0, 0), start_button_rect)
@@ -40,7 +41,16 @@ def volume_option(screen):
     text = font_name.render("Volume", True, (255, 255, 255))
     text_rect = text.get_rect(center=volume_option.center)
     screen.blit(text, text_rect)
+    
+def controls_option(screen) :
+    screen.fill((0, 0, 0))  # Black screen for the option screen
+    font_size = 72
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
+    text = font_name.render("Controls", True, (255, 255, 255))
+    text_rect = text.get_rect(center=(1600 // 2, 1000 // 2))
+    screen.blit(text, text_rect)
 
+#MeiTing Part
 def display_pillar(screen, pillar_x, pillar_height):
     upper_pipe_image = pygame.image.load("graphics/enemy/upper_pillar.png").convert_alpha()
     lower_pipe_image = pygame.image.load("graphics/enemy/lower_pillar.png").convert_alpha()
@@ -68,9 +78,8 @@ def display_pillar(screen, pillar_x, pillar_height):
     screen.blit(lower_pipe_image, (pillar_x-3, pillar_height + 300))
 
 
-
 def collision_detection(player_x, player_y, pillar_x, pillar_height):
-    player_rect = pygame.Rect(player_x, player_y, 50, 50) #player_rect will be from x and y of the player and the rect will be (85 by -50) -50 is because it will draw down the rectangle thus make it easier 
+    player_rect = pygame.Rect(player_x, player_y, 40, 40) #player_rect will be from x and y of the player 
     pillar_rect1 = pygame.Rect(pillar_x, 0, 60, pillar_height)  #player_rect 1 will be from pillar x (upper) and the y =0 ; width of the pillar and the randint height of it
     pillar_rect2 = pygame.Rect(pillar_x, pillar_height + 200, 60, 1000 - pillar_height - 330) #player_rect 2 will be collision for the bottom_pillar calculation.. :P
 
@@ -78,7 +87,7 @@ def collision_detection(player_x, player_y, pillar_x, pillar_height):
         return True
     return False
 
-
+#Danny Part
 def main(screen):
     clock = pygame.time.Clock()
     
@@ -93,9 +102,8 @@ def main(screen):
     #background
     background = pygame.image.load("graphics/background1.png").convert()
     background_width = background.get_width()
-    background_rect = background.get_rect() #rect will be x and y of the background
     scroll = 0 #the starting background of the game when not scrolling is 0
-    tiles = math.ceil(1600 / background_width) + 1 
+    tiles = math.ceil(1600 / background_width) + 1 # basically 2 images next to each other
     
     
     #multiple screens
@@ -123,7 +131,7 @@ def main(screen):
     egg_surface = egg_sprite_sheet.get_image(0, 40, 40, 1, BLACK)
     
 
-    duck_egg_spawn_timer = pygame.USEREVENT + 1
+    duck_egg_spawn_timer = pygame.USEREVENT + 10
     duck_egg_spawn_time = 1000 #sec for egg to spawn each time
     pygame.time.set_timer(duck_egg_spawn_timer, duck_egg_spawn_time) # generate an event signal for the event duck_egg_spawn_timer every 3 seconds. # bassically making my own event to make delays in the egg dropping :P
     spawned = True
@@ -151,12 +159,7 @@ def main(screen):
                 pygame.draw.rect(screen, (255, 255, 255), selection_button)
 
         elif show_option_screen:
-            screen.fill((0, 0, 0))  # Black screen for the option screen
-            font_size = 72
-            font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
-            text = font_name.render("Controls", True, (255, 255, 255))
-            text_rect = text.get_rect(center=(1600 // 2, 1000 // 2))
-            screen.blit(text, text_rect)
+            controls_option(screen)
             volume_option(screen)
 
             #blinking selection button
@@ -175,26 +178,26 @@ def main(screen):
 
             #duck egg 
             for event in pygame.event.get():
-                if spawned and event.type == duck_egg_spawn_timer:
-                    egg_surface_rect = egg_surface.get_rect(center=(random.randint(100,800), random.randint(-100,-20)))
-                    spawned = False
+                if spawned and event.type == duck_egg_spawn_timer: 
+                    egg_surface_rect = egg_surface.get_rect(center=(random.randint(100,800), random.randint(-100,-20))) #rect of the egg at random x and y
+                    spawned = False #becomes False after spawning or hitting the ground
                 if not spawned and egg_surface_rect != None and (pygame.Rect(player_x, player_y, 120, 120)).colliderect(egg_surface_rect):
-                    score +=1
-                    spawned = True
-                    egg_surface_rect = None
-                    print(score)
+                    score +=1 #+1 when collide with egg
+                    spawned = True #spawns the egg when True
+                    egg_surface_rect = None #return the rect to none and it will then generate a new rect 
                     
                     
             #background scroll
             for i in range(0, tiles):
                 screen.blit(background, (i * background_width + scroll, 0))
-                background_rect.x = i * background_width + scroll
+                
+            scroll -= 2 #after drawing all the tiles in the loop; sroll will be -2 ; to make it scroll
 
-            scroll -= 2
-
-            if abs(scroll) > background_width:
+            if abs(scroll) > background_width: #meaning the background had went past 2 ;it reset the scroll to 0
                 scroll = 0
 
+
+#MeiTing Part
 
             #pillar 
             pillar_x += pillar_x_change
@@ -207,6 +210,12 @@ def main(screen):
             if collision_detection(player_x, player_y, pillar_x, pillar_height):
                 show_game_screen = False  # Stop the game
                 restart_game = True
+#YongXin Part
+                text_score = open("demofile2.txt", "a")
+                text_score.write(f"{score}\n")
+                new_score = score
+                print(new_score)
+                text_score.close()
                 while restart_game == True:
                     for event in pygame.event.get(): 
                         if event.type == pygame.KEYDOWN :
@@ -219,6 +228,11 @@ def main(screen):
                                 restart_game = False
                                 score= 0
                             
+
+
+
+
+#DANNY Part
 
             #keys WASD input
             keys = pygame.key.get_pressed()
@@ -239,24 +253,27 @@ def main(screen):
                 player_y += player_speed
                 animation_controller.frame = 0  # Reset frame when not moving
                 
-                
+#MeiTing Part
 
             # Freeze the player's movement on collision
             if not collision_detection(player_x, player_y, pillar_x, pillar_height):
                 player_y += gravity_speed  # Apply gravity consistently
 
+
+#DANNY Part
+
             # Ensure player stays within bounds
             player_y = max(0, min(player_y, 700))
             player_x = max(0, min(player_x, 800))
 
-            animation_controller.update_animation(screen, player_x, player_y)
+            animation_controller.update_animation(screen, player_x, player_y) #updates animation on screen at the player coords
 
             
             if not spawned: #means that egg is already in the game 
                 if egg_surface_rect.y < 850:
                     egg_surface_rect.y += 2
                     screen.blit(egg_surface, egg_surface_rect)
-                elif egg_surface_rect.y == 850:
+                elif egg_surface_rect.y == 850: #when egg hits the ground
                     egg_surface_rect = None
                     spawned = True #means that the game need to spawn an egg
             
@@ -269,7 +286,7 @@ def main(screen):
                 pygame.quit()
                 exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_RETURN:# press enter key
                     if show_menu_screen:
                         if selected_button == 0:  # Start game
                             show_menu_screen = False
@@ -291,8 +308,11 @@ def main(screen):
                             screen.fill((0, 0, 0))
                             pygame.display.update()
                         elif selected_button == 2:  # Volume
-                            pass
-                elif event.key == pygame.K_DOWN:
+                            show_menu_screen = False
+                            show_option_screen = False
+                            screen.fill((0, 0, 0))
+                            pygame.display.update()
+                elif event.key == pygame.K_DOWN: #basic scrollig through the menu
                     if show_menu_screen:
                         if selected_button < 2:
                             selected_button += 1
