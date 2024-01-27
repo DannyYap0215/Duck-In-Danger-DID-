@@ -68,11 +68,31 @@ def volume_option(screen):
     screen.blit(text, text_rect)
     
 def controls_option(screen) :
+    controls_option = pygame.Rect(700, 550, 200, 100)
+    pygame.draw.rect(screen, (0, 0, 0), controls_option)
     screen.fill((0, 0, 0))  # Black screen for the option screen
     font_size = 72
     font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
     text = font_name.render("Controls", True, (255, 255, 255))
-    text_rect = text.get_rect(center=(1600 // 2, 1000 // 2))
+    text_rect = text.get_rect(center=(800,500))
+    screen.blit(text, text_rect)
+    
+def volume_off_option(screen):
+    volume_off_option = pygame.Rect(700, 550, 200, 100)
+    pygame.draw.rect(screen, (0, 0, 0), volume_off_option)
+    font_size = 72
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
+    text = font_name.render("Off", True, (255, 255, 255))
+    text_rect = text.get_rect(center=volume_off_option.center)
+    screen.blit(text, text_rect)
+    
+def volume_on_option(screen) :
+    volume_on_option = pygame.Rect(700, 200, 200, 100)
+    pygame.draw.rect(screen, (0, 0, 0), volume_on_option)
+    font_size = 72
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
+    text = font_name.render("On", True, (255, 255, 255))
+    text_rect = text.get_rect(center=(800,500))
     screen.blit(text, text_rect)
 
 #MeiTing Part
@@ -137,6 +157,7 @@ def main(screen):
     show_menu_screen = True
     show_game_screen = False
     show_option_screen = False
+    show_volume_screen = False
     selected_button = 0
     
 
@@ -190,9 +211,26 @@ def main(screen):
                 pygame.draw.rect(screen, (255, 255, 255), selection_button)
 
         elif show_option_screen:
+            screen.fill((0, 0, 0))
             controls_option(screen)
             volume_option(screen)
+            
+            #blinking selection button
+            selected_button_blink_timer += clock.get_time()
+            if selected_button_blink_timer >= selected_button_blink_cooldown:
+                selected_button_blink_timer = 0
+                is_button_visible = not is_button_visible
+            if is_button_visible:
+                selection_button = pygame.Rect(420, 350 + selected_button * 100, 30, 100)
+                pygame.draw.rect(screen, (255, 255, 255), selection_button)
 
+            pygame.display.update()
+            
+        elif show_volume_screen :
+            screen.fill((0, 0, 0))
+            volume_off_option(screen)
+            volume_on_option(screen)
+            
             #blinking selection button
             selected_button_blink_timer += clock.get_time()
             if selected_button_blink_timer >= selected_button_blink_cooldown:
@@ -351,13 +389,25 @@ def main(screen):
                         elif selected_button == 2:  # Volume
                             show_menu_screen = False
                             show_option_screen = False
-                            screen.fill((0, 0, 0))
-                            pygame.display.update()
+                            show_volume_screen = True
+                    elif show_volume_screen:
+                        if selected_button == 1:  # Controls
+                            pygame.mixer.music.play()
+                        elif selected_button == 2:  # Volume
+                            pygame.mixer.music.stop()
+                           
+                            
+                           
+                            
                 elif event.key == pygame.K_DOWN: #basic scrollig through the menu
                     if show_menu_screen:
                         if selected_button < 2:
                             selected_button += 1
                     if show_option_screen:
+                        selected_button = 1
+                        if selected_button <= 2:
+                            selected_button += 1
+                    if show_volume_screen:
                         selected_button = 1
                         if selected_button <= 2:
                             selected_button += 1
@@ -369,10 +419,15 @@ def main(screen):
                         selected_button = 1
                         if selected_button > 1:
                             selected_button -= 1
+                    if show_volume_screen:
+                        selected_button = 1
+                        if selected_button > 1:
+                            selected_button -= 1
                 elif event.key == pygame.K_ESCAPE:
                     show_menu_screen = True
                     show_game_screen = False
                     show_option_screen = False
+                    show_volume_screen = False
 
 
 if __name__ == "__main__":
