@@ -95,6 +95,32 @@ def volume_on_option(screen) :
     text_rect = text.get_rect(center=(800,500))
     screen.blit(text, text_rect)
 
+def how_to_scroll_up_down(screen) :
+    how_to_scroll_up_down = pygame.Rect(200, 200, 200, 100)
+    pygame.draw.rect(screen, (0, 0, 0), how_to_scroll_up_down)
+    font_size = 20
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
+    text = font_name.render("\"Up\" and \"Down\" Key to scroll ", True, (255, 255, 255))
+    text_rect = text.get_rect(center=(270,900))
+    screen.blit(text, text_rect)
+    
+def how_to_scroll_enter(screen) :
+    how_to_scroll_enter = pygame.Rect(200, 200, 200, 100)
+    pygame.draw.rect(screen, (0, 0, 0), how_to_scroll_enter)
+    font_size = 20
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", font_size)
+    text = font_name.render("\"Enter\" Key to select", True, (255, 255, 255))
+    text_rect = text.get_rect(center=(200,950))
+    screen.blit(text, text_rect)
+    
+def controls_controls_option(screen) :
+    font_name = pygame.font.Font("fonts/8-BIT WONDER.ttf", 60)
+    text = font_name.render("Controls", True, (255, 255, 255))
+    screen.blit(text, text.get_rect(center=(600,500)))
+    
+
+    
+
 #MeiTing Part
 def display_pillar(screen, pillar_x, pillar_height):
     upper_pipe_image = pygame.image.load("graphics/enemy/upper_pillar.png").convert_alpha()
@@ -200,6 +226,8 @@ def main(screen):
             start_button(screen)
             option_button(screen)
             quit_button(screen)
+            how_to_scroll_up_down(screen)
+            how_to_scroll_enter(screen)
             selected_button_blink_timer += clock.get_time()
 
             #selection blinker
@@ -385,6 +413,7 @@ def main(screen):
                             show_menu_screen = False
                             show_option_screen = False
                             screen.fill((0, 0, 0))
+                            controls_controls_option(screen)
                             pygame.display.update()
                         elif selected_button == 2:  # Volume
                             show_menu_screen = False
