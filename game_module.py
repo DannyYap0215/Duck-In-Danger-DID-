@@ -3,7 +3,32 @@ from animation import AnimationController
 import math
 import random
 import spritesheet
+from pygame import mixer
 #remember to add Duck in Danger/ to each path when submitting as a ZIP file
+
+#MeiTing Part
+pygame.mixer.init() #Initialize mixer
+pygame.mixer.music.load("background.mp3") # Load music file
+pygame.mixer.music.set_volume(0.5)  # Set volume (optional), Adjust the volume as needed
+pygame.mixer.music.play(-1)  # Play musicThe -1 argument makes the music loop indefinitely
+
+game_over = pygame.mixer.Sound('game_over.mp3')
+game_over.set_volume(1.0)
+
+def intro_screen(screen):
+    intro = pygame.image.load("graphics/intro.png").convert()
+    intro = pygame.transform.scale(intro, (1550, 950))
+    screen.blit(intro, (25, 25))
+    pygame.display.update()
+
+    waiting_for_key = True
+    while waiting_for_key:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                waiting_for_key = False
+            elif event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
 
 #Danny Part
 def start_button(screen):
@@ -102,11 +127,13 @@ def main(screen):
     #background
     background = pygame.image.load("graphics/background1.png").convert()
     background_width = background.get_width()
+    background_rect = background.get_rect() #rect will be x and y of the background
     scroll = 0 #the starting background of the game when not scrolling is 0
     tiles = math.ceil(1600 / background_width) + 1 # basically 2 images next to each other
     
     
     #multiple screens
+    show_intro_screen = True
     show_menu_screen = True
     show_game_screen = False
     show_option_screen = False
@@ -142,6 +169,10 @@ def main(screen):
     
     while True:
         clock.tick(60)
+        if show_intro_screen:
+            intro_screen(screen)
+            show_intro_screen = False
+            show_menu_screen = True
 
         if show_menu_screen:
             screen.fill((0, 0, 0))
@@ -208,8 +239,21 @@ def main(screen):
 
             # Check for collision
             if collision_detection(player_x, player_y, pillar_x, pillar_height):
+                game_over.play()
                 show_game_screen = False  # Stop the game
                 restart_game = True
+                while restart_game == True:
+                    for event in pygame.event.get(): 
+                        if event.type == pygame.KEYDOWN :
+                            if event.key == pygame.K_SPACE :#When space key is pressed, game restart
+                                show_game_screen = True #Reset game
+                                player_x, player_y = 400, 300
+                                pillar_x = 1600
+                                pillar_height = random.randint(150, 450)
+                                scroll = 0
+                                restart_game = False
+                                score= 0
+
 #YongXin Part
                 text_score = open("demofile2.txt", "a")
                 text_score.write(f"{score}\n")
@@ -233,7 +277,6 @@ def main(screen):
 
 
 #DANNY Part
-
             #keys WASD input
             keys = pygame.key.get_pressed()
 
@@ -254,14 +297,12 @@ def main(screen):
                 animation_controller.frame = 0  # Reset frame when not moving
                 
 #MeiTing Part
-
             # Freeze the player's movement on collision
             if not collision_detection(player_x, player_y, pillar_x, pillar_height):
                 player_y += gravity_speed  # Apply gravity consistently
 
 
 #DANNY Part
-
             # Ensure player stays within bounds
             player_y = max(0, min(player_y, 700))
             player_x = max(0, min(player_x, 800))
@@ -336,7 +377,7 @@ def main(screen):
 
 if __name__ == "__main__":
     pygame.init()
-    pygame.display.set_caption("Duck On The Run!")
+    pygame.display.set_caption("Duck In Danger!")
     WIDTH, HEIGHT = (1600, 1000)
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     main(screen)
