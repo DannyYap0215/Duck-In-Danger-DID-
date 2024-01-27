@@ -329,18 +329,6 @@ def main(screen):
                 game_over.play()
                 show_game_screen = False  # Stop the game
                 restart_game = True
-                while restart_game == True:
-                    for event in pygame.event.get(): 
-                        if event.type == pygame.KEYDOWN :
-                            if event.key == pygame.K_SPACE :#When space key is pressed, game restart
-                                show_game_screen = True #Reset game
-                                player_x, player_y = 400, 300
-                                pillar_x = 1600
-                                pillar_height = random.randint(150, 450)
-                                scroll = 0
-                                restart_game = False
-                                score= 0
-
 #YongXin Part
                 text_score = open("demofile2.txt", "a")
                 text_score.write(f"{score}\n")
@@ -358,6 +346,8 @@ def main(screen):
                                 scroll = 0
                                 restart_game = False
                                 score= 0
+                                egg_surface_rect = None
+                                spawned = True #means that the game need to spawn an egg
                             
 
 
@@ -401,7 +391,7 @@ def main(screen):
                 if egg_surface_rect.y < 850:
                     egg_surface_rect.y += 2
                     screen.blit(egg_surface, egg_surface_rect)
-                elif egg_surface_rect.y == 850: #when egg hits the ground
+                elif egg_surface_rect.y == 850 : #when egg hits the ground
                     egg_surface_rect = None
                     spawned = True #means that the game need to spawn an egg
             
