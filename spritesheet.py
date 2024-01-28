@@ -1,13 +1,18 @@
 import pygame
 
-class SpriteSheet() :
-    def __init__(self,image) :
+class SpriteSheet():
+    def __init__(self, image):
         self.sheet = image
+
+    def get_image(self, frame, width, height, scale, color): #frame is where the image "start"
+        frame_x = frame * width # starting position of the image getting "cropped"
+        source_rect = pygame.Rect(frame_x, 0, width, height) 
+        image = self.sheet.subsurface(source_rect) #makes a new surface of what we need from our spritesheet
         
-    def get_image(self, frame, width, height, scale, colour) : #frame is where the image "start"
-        image = pygame.Surface((width,height,)).convert_alpha() # convert_alpha() is used to optimize the image for better performance :P
-        image.blit(self.sheet,(0,0), ((frame * width), 0, width, height))   # inserting the image #(image,start from(0,0),start from which frame (frame*width),start from y=0, the rect of width and height)
-        image = pygame.transform.scale(image, (width *  scale, height * scale)) # Scales the images
-        image.set_colorkey(colour)  #make the colour transparent 
-     
+        scaled_width = int(width * scale) #get scaled width
+        scaled_height = int(height * scale) #get scaled height
+        image = pygame.transform.scale(image, (scaled_width, scaled_height)) # Scales the images
+        
+        image.set_colorkey(color) #make the colour transparent 
+        
         return image

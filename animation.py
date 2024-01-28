@@ -15,13 +15,13 @@ class AnimationController():
         sprite_sheet = spritesheet.SpriteSheet(duck_sprite_sheet_image)
         
         animation_steps = [3, 5] #3 images for the first animation (frame 0) and 5 images for the second animation (frame 1)
-        step_counter = 0
+        step = 0
 
         for animation in animation_steps:
             temp_image_list = []
             for _ in range(animation):
-                temp_image_list.append(sprite_sheet.get_image(step_counter, 40, 40, 5, self.BLACK)) #step_counter is the x-cords where the current frame of spritesheet starts #get_image is from spritesheet module where step_counter will be 1, 2, 3 and it will affect which image is gotten :P
-                step_counter += 1
+                temp_image_list.append(sprite_sheet.get_image(step, 40, 40, 5, self.BLACK)) #step is the x-cords where the current frame of spritesheet starts #get_image is from spritesheet module where step_counter will be 1, 2, 3 and it will affect which image is gotten :P
+                step += 1
             self.animation_list.append(temp_image_list)# so whne starting it append two different animation list into the empty list 
 
         self.action = 0 
