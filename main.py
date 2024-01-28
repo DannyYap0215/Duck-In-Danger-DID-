@@ -17,7 +17,7 @@ if __name__ == "__main__":
     main()
 
 # *********************************************************
-# Program: main.py , game_module.py , animation.py , spritesheet.py
+# Program: main.py , game_module.py , animation.py , spritesheet.py 
 # Course: PSP0101 PROBLEM SOLVING AND PROGRAM DESIGN
 # Class: TL9L
 # Year: 2023/24 Trimester 1

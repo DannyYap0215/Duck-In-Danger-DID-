@@ -501,8 +501,8 @@ def main(screen) :
                             show_volume_screen = True
                     elif show_controls_screen : # YongXin Part
                         if event.key == pygame.K_ESCAPE :
-                                show_controls_screen = False
-                                show_option_screen = True  # Navigate from controls to option
+                            show_controls_screen = False
+                            show_option_screen = True  # Navigate from controls to option
                     elif show_volume_screen :
                         if selected_button == 1 :  # On sound
                             pygame.mixer.music.play()
@@ -515,7 +515,11 @@ def main(screen) :
                             elif show_menu_screen :
                                 show_menu_screen = False
                                 show_volume_screen = False  # Navigate from option to menu
-
+                    elif show_game_screen :
+                        if event.key == pygame.K_ESCAPE :
+                            show_game_screen = False
+                            show_menu_screen = True 
+                            
                 elif event.key == pygame.K_DOWN : # Basic scrollig through the menu
                     if show_menu_screen :
                         if selected_button < 2 :
@@ -550,7 +554,9 @@ def main(screen) :
                     elif show_volume_screen :
                         show_volume_screen = False
                         show_option_screen = True  # Navigate from volume to option
-                
+                    elif show_game_screen :
+                        show_game_screen = False
+                        show_menu_screen = True 
 if __name__ == "__main__" :
     pygame.init()
     pygame.display.set_caption("Duck In Danger!")
