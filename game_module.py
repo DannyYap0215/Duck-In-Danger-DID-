@@ -107,7 +107,7 @@ def how_to_scroll_up_down (screen) :
     font_size = 20
     font_name = pygame.font.Font ("fonts/8-BIT WONDER.ttf", font_size)
     text = font_name.render ("[ Up ] and [ Down ] Key to scroll ", True, (255, 255, 255) )
-    text_rect = text.get_rect (center = (310,890) ) # 270,900
+    text_rect = text.get_rect (center = (310,890) ) 
     screen.blit (text, text_rect)
     
 def how_to_scroll_enter (screen) :
@@ -116,7 +116,7 @@ def how_to_scroll_enter (screen) :
     font_size = 20
     font_name = pygame.font.Font ("fonts/8-BIT WONDER.ttf", font_size)
     text = font_name.render ("[ Enter ] Key to select", True, (255, 255, 255) )
-    text_rect = text.get_rect ( center = (230,920) ) # 200,950
+    text_rect = text.get_rect ( center = (230,920) ) 
     screen.blit (text, text_rect)
     
 def controls_controls_option (screen) :
@@ -135,18 +135,18 @@ def controls_controls_option (screen) :
     restart_text = font_name.render ("[ Space ]  Key to restart", True, (255, 255, 255) )
     esc_text = font_name.render ("[ Esc ]  Key to open menu", True, (255, 255, 255) )
 
-    screen.blit (menu_text, menu_text.get_rect (center = (800, 200) ) ) # 140
-    screen.blit (up_text, up_text.get_rect (center = (800, 260) ) ) # 200
-    screen.blit (down_text, down_text.get_rect (center = (800, 310) ) ) # 250
-    screen.blit (select_text, select_text.get_rect (center = (800, 360) ) ) # 300
+    screen.blit (menu_text, menu_text.get_rect (center = (800, 200) ) ) 
+    screen.blit (up_text, up_text.get_rect (center = (800, 260) ) ) 
+    screen.blit (down_text, down_text.get_rect (center = (800, 310) ) ) 
+    screen.blit (select_text, select_text.get_rect (center = (800, 360) ) ) 
 
-    screen.blit (in_game_text, in_game_text.get_rect (center = (800, 500) ) ) # 440
-    screen.blit (w_text, w_text.get_rect (center = (800, 550) ) ) # 500
-    screen.blit (a_text, a_text.get_rect (center = (800, 600) ) ) # 550
-    screen.blit (s_text, s_text.get_rect (center = (800, 650) ) ) # 600
-    screen.blit (d_text, d_text.get_rect (center = (800, 700) ) ) # 650
-    screen.blit (restart_text, restart_text.get_rect (center = (800, 750) ) ) # 700
-    screen.blit (esc_text, esc_text.get_rect (center = (800, 800) ) ) # 750
+    screen.blit (in_game_text, in_game_text.get_rect (center = (800, 500) ) ) 
+    screen.blit (w_text, w_text.get_rect (center = (800, 550) ) ) 
+    screen.blit (a_text, a_text.get_rect (center = (800, 600) ) ) 
+    screen.blit (s_text, s_text.get_rect (center = (800, 650) ) ) 
+    screen.blit (d_text, d_text.get_rect (center = (800, 700) ) ) 
+    screen.blit (restart_text, restart_text.get_rect (center = (800, 750) ) ) 
+    screen.blit (esc_text, esc_text.get_rect (center = (800, 800) ) ) 
 
 # MeiTing Part
 def display_pillar (screen, pillar_x, pillar_height) :
@@ -356,23 +356,21 @@ def main (screen) :
                 screen.blit (duck_stand, duck_stand_rect)
 
                 font = pygame.font.Font ("fonts/8-BIT WONDER.ttf", 72)
-                score_num = str (score) 
-                score_display = "Score " + str (score)                    
+                score_num = str(score) 
+                score_display = "Score " + str(score)                    
                 score_text = font.render (score_display, True, (255, 255, 255) )
                 score_rect = score_text.get_rect (center = (800, 650) )
                 screen.blit (score_text, score_rect) # Display score
-                
-                text_score = open ("demofile2.txt", "a") # Store score and find high score
+                text_score = open ("score.txt", "a") # Store score and find high score
                 text_score.write (f"{score_num}\n")
-                new_score = score_num
-                print (new_score)
-                li = new_score.split ()
-                li.sort ()
-                highest = li [-1]
-                text_score.close ()
-
-                highest_score_num = str (highest) 
-                highest_score_display = "High Score " + str (highest)                    
+                text_score.close()
+                with open("score.txt", "r") as file:
+                    numbers = [int(line.strip()) for line in file.readlines()]
+                    highest = max(numbers)
+                    highest = str(highest)
+                
+                
+                highest_score_display = "High Score " + highest                  
                 highest_score_text = font.render (highest_score_display, True, (255, 255, 255) )
                 highest_score_rect = highest_score_text.get_rect (center = (800, 800) )
 
@@ -428,7 +426,7 @@ def main (screen) :
                 animation_controller.action = 1  # Set the action for left movement
             elif keys [pygame.K_d] :
                 player_x += player_speed
-                animation_controller.action = 0  # Set the action for right movement
+                animation_controller.action = 1  # Set the action for right movement
             elif keys [pygame.K_w] :
                 player_y -= player_speed + 5
                 animation_controller.action = 1  # Set the action for up movement
@@ -464,7 +462,7 @@ def main (screen) :
             font = pygame.font.Font ("fonts/8-BIT WONDER.ttf", 45)
             score_text = "Score " + str (score)
             text = font.render (score_text, True, (255, 255, 255) )
-            text_rect = text.get_rect (center = (1300, 150) )
+            text_rect = text.get_rect (center = (1400, 50) )
             screen.blit (text, text_rect)
 
             pygame.display.update ()
