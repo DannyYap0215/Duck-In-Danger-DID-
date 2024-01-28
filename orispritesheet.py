@@ -11,3 +11,6 @@ class SpriteSheet():
 		image.set_colorkey(colour)
 
 		return image
+
+#cant find the source code for animation.py so heres the link https://www.youtube.com/watch?v=nXOVcOBqFwM
+#made his code into a module
