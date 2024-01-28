@@ -8,11 +8,11 @@ from pygame import mixer
 
 #MeiTing Part
 pygame.mixer.init() #Initialize mixer
-pygame.mixer.music.load("background.mp3") # Load music file
+pygame.mixer.music.load("audio/background.mp3") # Load music file
 pygame.mixer.music.set_volume(0.5)  # Set volume (optional), Adjust the volume as needed
 pygame.mixer.music.play(-1)  # Play musicThe -1 argument makes the music loop indefinitely
 
-game_over = pygame.mixer.Sound('game_over.mp3')
+game_over = pygame.mixer.Sound('audio/game_over.mp3')
 game_over.set_volume(1.0)
 
 def intro_screen(screen):
