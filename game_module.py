@@ -427,7 +427,7 @@ def main (screen) :
                 animation_controller.action = 1  # Set the action for left movement
             elif keys [pygame.K_d] :
                 player_x += player_speed
-                animation_controller.action = 0  # Set the action for right movement
+                animation_controller.action = 1  # Set the action for right movement
             elif keys [pygame.K_w] :
                 player_y -= player_speed + 5
                 animation_controller.action = 1  # Set the action for up movement
