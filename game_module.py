@@ -9,8 +9,8 @@ from pygame import mixer
 # MeiTing Part
 pygame.mixer.init () # Initialize mixer
 pygame.mixer.music.load ("audio/background.mp3") # Load music file
-pygame.mixer.music.set_volume (0.5)  # Set volume (optional), adjust the volume as needed
-pygame.mixer.music.play (-1)  # Play musicThe -1 argument makes the music loop indefinitely
+pygame.mixer.music.set_volume (0.5)  # Set volume
+pygame.mixer.music.play (-1)  # The -1 argument makes the music loop indefinitely
 
 # YongXin Part
 # Load sound effects
@@ -22,17 +22,17 @@ game_over_sound.set_volume (1.0)
 
 # MeiTing Part
 def intro_screen (screen) :
-    intro = pygame.image.load ("graphics/intro.png") .convert ()
-    intro = pygame.transform.scale (intro, (1550, 950) )
-    screen.blit (intro, (25, 25) )
-    pygame.display.update ()
+    intro = pygame.image.load ("graphics/intro.png") .convert () #Load image
+    intro = pygame.transform.scale (intro, (1550, 950) ) #Resize the image
+    screen.blit (intro, (25, 25) ) #Display in specified position
+    pygame.display.update () #Update the display to show the intro
 
     waiting_for_key = True
     while waiting_for_key :
         for event in pygame.event.get () :
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE :
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE : #Checked if the space key is preesed to exit the loop
                 waiting_for_key = False
-            elif event.type == pygame.QUIT :
+            elif event.type == pygame.QUIT : #Checked if the window closed to exit the program
                 pygame.quit ()
                 exit ()
 
@@ -118,7 +118,8 @@ def how_to_scroll_enter (screen) :
     text = font_name.render ("[ Enter ] Key to select", True, (255, 255, 255) )
     text_rect = text.get_rect ( center = (230,920) ) 
     screen.blit (text, text_rect)
-    
+
+# MeiTing Part
 def controls_controls_option (screen) :
     font_name = pygame.font.Font ("fonts/8-BIT WONDER.ttf", 30)
 
@@ -148,7 +149,6 @@ def controls_controls_option (screen) :
     screen.blit (restart_text, restart_text.get_rect (center = (800, 750) ) ) 
     screen.blit (esc_text, esc_text.get_rect (center = (800, 800) ) ) 
 
-# MeiTing Part
 def display_pillar (screen, pillar_x, pillar_height) :
     upper_pipe_image = pygame.image.load ("graphics/enemy/upper_pillar.png") .convert_alpha ()
     lower_pipe_image = pygame.image.load ("graphics/enemy/lower_pillar.png") .convert_alpha ()
@@ -326,6 +326,7 @@ def main (screen) :
                     score +=1 # +1 when collide with egg
                     spawned = True # Spawns the egg when True
                     egg_surface_rect = None # Return the rect to none and it will then generate a new rect 
+                    score_sound.play()
                     
             # Background scroll
             for i in range (0, tiles) :
@@ -344,9 +345,8 @@ def main (screen) :
                 pillar_height = random.randint (150, 450)
                 pass_current_pillar = False  # Reset pass_current_pillar for the new pillar (YongXin Part)
             display_pillar (screen, pillar_x, pillar_height)
-
-# YongXin Part            
-            
+  
+# YongXin Part          
             # Check for collision
             if collision_detection (player_x, player_y, pillar_x, pillar_height) :
                 game_over_sound.play ()
@@ -354,7 +354,7 @@ def main (screen) :
                 screen.fill ( (131,192,223) )
                 screen.blit (game_name_text, game_name_rect)
                 screen.blit (duck_stand, duck_stand_rect)
-
+            
                 font = pygame.font.Font ("fonts/8-BIT WONDER.ttf", 72)
                 score_num = str(score) 
                 score_display = "Score " + str(score)                    
@@ -410,7 +410,7 @@ def main (screen) :
                 score += 1
                 pass_current_pillar = True
                 # Play the score sound
-                score_sound.play ()
+                score_sound.play()
 
             # Reset to ensure the game can detect the player passes a pillar next time
             if pillar_x <= -10:
