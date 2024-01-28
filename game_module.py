@@ -124,7 +124,7 @@ def controls_controls_option(screen) :
     a_text = font_name.render("\"A\" Key to move left", True, (255, 255, 255))
     s_text = font_name.render("\"S\" Key to move down", True, (255, 255, 255))
     d_text = font_name.render("\"D\" Key to move right", True, (255, 255, 255))
-    restart_text = font_name.render("\"Enter\" Key to restart", True, (255, 255, 255))
+    restart_text = font_name.render("\"Space\" Key to restart", True, (255, 255, 255))
     in_game_text = pygame.font.Font("fonts/8-BIT WONDER.ttf", 50).render("In Game", True, (255, 255, 255))
     screen.blit(up_text, up_text.get_rect(center=(800,200)))
     screen.blit(down_text, down_text.get_rect(center=(800,250)))
