@@ -118,7 +118,8 @@ def how_to_scroll_enter (screen) :
     text = font_name.render ("[ Enter ] Key to select", True, (255, 255, 255) )
     text_rect = text.get_rect ( center = (230,920) ) # 200,950
     screen.blit (text, text_rect)
-    
+
+# MeiTing Part    
 def controls_controls_option (screen) :
     font_name = pygame.font.Font ("fonts/8-BIT WONDER.ttf", 30)
 
@@ -148,7 +149,6 @@ def controls_controls_option (screen) :
     screen.blit (restart_text, restart_text.get_rect (center = (800, 750) ) ) # 700
     screen.blit (esc_text, esc_text.get_rect (center = (800, 800) ) ) # 750
 
-# MeiTing Part
 def display_pillar (screen, pillar_x, pillar_height) :
     upper_pipe_image = pygame.image.load ("graphics/enemy/upper_pillar.png") .convert_alpha ()
     lower_pipe_image = pygame.image.load ("graphics/enemy/lower_pillar.png") .convert_alpha ()
